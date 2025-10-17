@@ -1,0 +1,81 @@
+
+.ranking-container {
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(180deg, #0f1624, #1c2541);
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.filter-bar {
+  margin-bottom: 20px;
+}
+
+.filter-bar label {
+  font-size: 1rem;
+  margin-right: 10px;
+}
+
+.filter-bar select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: #1e2a47;
+  color: #fff;
+}
+
+.ranking-table {
+  width: 90%;
+  max-width: 700px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background: #10182f;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.ranking-table th,
+.ranking-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #243b55;
+}
+
+.ranking-table th {
+  background: #243b55;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.ranking-table tr:hover {
+  background: #1b2a4a;
+}
+
+.btn-secondary {
+  margin-top: 30px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4b4bff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: #3535cc;
+}
+
+.btn-ranking {
+  margin-top: 20px;
+  background-color: #fbc531;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-ranking:hover {
+  background-color: #e1a900;
+}

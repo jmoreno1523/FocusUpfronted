@@ -1,0 +1,29 @@
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 12px 0 20px;
+}
+
+.stat-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.stat-title { font-weight: 700; margin-bottom: 8px; opacity: .95; }
+.stat-line { margin: 2px 0; opacity: .9; }
+
+.delta.up   { color: #36d399; font-weight: 600; }   /* mejora */
+.delta.down { color: #f87272; font-weight: 600; }   /* empeora */
+.delta.same { opacity: .7; }
+
+.badge-pb {
+  background: #FFD54F;
+  color: #2a2a2a;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
