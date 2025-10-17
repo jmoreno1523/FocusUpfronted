@@ -27,3 +27,24 @@
 .game-btn:hover {
   background-color: #1f8136;
 }
+/* 🎴 Botón especial para Juego de Memoria */
+.btn-memory {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 10px;
+  width: 100%;
+  max-width: 380px;
+  transition: all 0.3s ease;
+}
+
+.btn-memory:hover {
+  background: linear-gradient(135deg, #ee5a52, #d63031);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(255, 107, 107, 0.3);
+}

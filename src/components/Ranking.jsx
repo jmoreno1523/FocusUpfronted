@@ -1,37 +1,58 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Ranking.css";
+import "../styles/Ranking.css";
 
 function Ranking() {
   const [ranking, setRanking] = useState([]);
   const [selectedGame, setSelectedGame] = useState("reaction");
-  const [loading, setLoading] = useState(true); // Para manejar el estado de carga
-  const [error, setError] = useState(""); // Para manejar errores
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRanking = async () => {
-      setLoading(true);  // Inicia carga
-      setError("");  // Resetea el error en cada nueva llamada
+      setLoading(true);
+      setError("");
       try {
         const res = await fetch(`http://localhost:4000/api/scores/ranking?game=${selectedGame}`);
         const data = await res.json();
 
         if (data.ok) {
-          setRanking(data.data); // Actualiza los puntajes
+          setRanking(data.data);
         } else {
-          setError("❌ No se pudo obtener el ranking, intenta más tarde."); // Si hay un problema
+          setError("❌ No se pudo obtener el ranking, intenta más tarde.");
         }
       } catch (error) {
         console.error("⚠️ Error de conexión con el backend:", error);
-        setError("⚠️ Error de conexión, por favor intenta más tarde.");  // Captura errores de conexión
+        setError("⚠️ Error de conexión, por favor intenta más tarde.");
       } finally {
-        setLoading(false);  // Termina carga
+        setLoading(false);
       }
     };
 
     fetchRanking();
   }, [selectedGame]);
+
+  // Función para formatear el puntaje según el juego
+  const formatScore = (item) => {
+    switch (item.game) {
+      case "reaction":
+        return `${item.score} ms`;
+      case "memory":
+        // Formatear tiempo de memoria (ms a minutos:segundos)
+        const seconds = Math.floor(item.score / 1000);
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+      default:
+        return `${item.score} pts`;
+    }
+  };
+
+  // Función para obtener el icono del jugador
+  const getPlayerIcon = (item) => {
+    return item.isGuest ? "👤" : "⭐";
+  };
 
   return (
     <div className="ranking-container">
@@ -44,38 +65,81 @@ function Ranking() {
           <option value="reaction">⚡ Tiempo de Reacción</option>
           <option value="focus">👁️ Atención Visual</option>
           <option value="cups">🥤 Vasos y Pelota</option>
+          <option value="memory">🎴 Juego de Memoria</option>
         </select>
+      </div>
+
+      {/* Información del ranking actual */}
+      <div className="ranking-info">
+        {selectedGame === "memory" && (
+          <p>🎯 Se muestra el mejor tiempo de cada jugador</p>
+        )}
+        {selectedGame === "reaction" && (
+          <p>⚡ Se muestra el mejor tiempo de reacción</p>
+        )}
+        {!["memory", "reaction"].includes(selectedGame) && (
+          <p>⭐ Se muestra el mejor puntaje de cada jugador</p>
+        )}
       </div>
 
       {/* Mensaje de error */}
       {error && <p className="error-message">{error}</p>}
 
-      {/* Si se está cargando */}
+      {/* Estado de carga */}
       {loading ? (
-        <p>Cargando...</p>
+        <div className="loading-state">
+          <div className="spinner"></div>
+          <p>Cargando ranking...</p>
+        </div>
       ) : ranking.length === 0 ? (
-        <p>No hay registros para este juego aún.</p>
+        <div className="empty-state">
+          <p>📊 No hay registros para este juego aún.</p>
+          <p>¡Sé el primero en jugar!</p>
+        </div>
       ) : (
         <table className="ranking-table">
           <thead>
             <tr>
               <th>#</th>
               <th>Jugador</th>
-              <th>Juego</th>
-              <th>Puntaje</th>
+              <th>Tipo</th>
+              <th>
+                {selectedGame === "memory" || selectedGame === "reaction" 
+                  ? "Tiempo" 
+                  : "Puntaje"}
+              </th>
+              {selectedGame === "memory" && <th>Intentos</th>}
             </tr>
           </thead>
           <tbody>
             {ranking.map((item, index) => (
-              <tr key={item._id}>
-                <td>{index + 1}</td>
-                <td>{item.userId?.name || "Anónimo"}</td>
-                <td>{item.game}</td>
+              <tr key={item._id} className={index < 3 ? `top-${index + 1}` : ''}>
                 <td>
-                  {item.game === "reaction"
-                    ? `${item.score} ms`
-                    : `${item.score} pts`}
+                  {index === 0 ? "🥇" : 
+                   index === 1 ? "🥈" : 
+                   index === 2 ? "🥉" : 
+                   index + 1}
                 </td>
+                <td>
+                  <span className="player-name">
+                    {getPlayerIcon(item)} {item.playerName}
+                    {item.isGuest && <span className="guest-badge">Invitado</span>}
+                  </span>
+                </td>
+                <td>
+                  {item.game === "reaction" && "⚡ Reacción"}
+                  {item.game === "focus" && "👁️ Atención"}
+                  {item.game === "cups" && "🥤 Vasos"}
+                  {item.game === "memory" && "🎴 Memoria"}
+                </td>
+                <td className="score-value">
+                  {formatScore(item)}
+                </td>
+                {selectedGame === "memory" && (
+                  <td>
+                    <span className="attempts-badge">{item.attempts || 1}</span>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
@@ -83,7 +147,7 @@ function Ranking() {
       )}
 
       <button className="btn-secondary" onClick={() => navigate("/selector")}>
-        ⬅️ Volver
+        ⬅️ Volver al Menú
       </button>
     </div>
   );

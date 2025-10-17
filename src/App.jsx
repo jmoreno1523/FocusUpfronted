@@ -7,6 +7,8 @@ import FocusGame from "./components/FocusGame";
 import ScoreHistory from "./components/ScoreHistory";
 import CupGame from "./components/CupGame"; // 🥤 Juego de Vasos y Pelota
 import Ranking from "./components/Ranking"; // 🏆 Nuevo import para el ranking
+import MemoryGuest from "./components/MemoryGuest";
+import MemoryGame from "./components/MemoryGame";
 import "./App.css";
 
 // ✅ Componente de pantalla principal
@@ -59,6 +61,8 @@ function App() {
 
         {/* 🏆 Ranking general */}
         <Route path="/ranking" element={<Ranking />} />
+        <Route path="/memory-guest" element={<MemoryGuest />} />
+<Route path="/memory-game" element={<MemoryGame />} />
       </Routes>
     </Router>
   );

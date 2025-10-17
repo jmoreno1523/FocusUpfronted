@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import "./GameSelector.css";
+import "../styles/GameSelector.css";
 
 function GameSelector() {
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ function GameSelector() {
         </button>
       </div>
 
-      <button className="back-btn" onClick={() => navigate("/home")}>
+      <button className="back-btn" onClick={() => navigate("/")}>
         ⬅️ Volver al inicio
       </button>
     </div>

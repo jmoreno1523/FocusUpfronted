@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./ScoreHistory.css";
+import "../styles/ScoreHistory.css";
 
 export default function ScoreHistory() {
   const [scores, setScores] = useState([]);

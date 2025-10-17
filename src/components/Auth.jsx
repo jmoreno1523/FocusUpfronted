@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Auth.css";
+import "../styles/Auth.css";
 
 function Auth() {
   const [isLogin, setIsLogin] = useState(true);
@@ -54,11 +54,9 @@ function Auth() {
     }
   };
 
-  // 🚀 Lógica para modo invitado
-  const handleGuestLogin = () => {
-    const guestUser = { name: "Invitado", email: "invitado@ejemplo.com" };
-    localStorage.setItem("user", JSON.stringify(guestUser)); // Guardamos el invitado en localStorage
-    navigate("/home"); // Redirigimos a la página de inicio
+  // 🎴 Juego de Memoria exclusivo para invitados
+  const handleMemoryGame = () => {
+    navigate("/memory-guest");
   };
 
   return (
@@ -97,9 +95,9 @@ function Auth() {
         </button>
       </form>
 
-      {/* Botón para el Modo Invitado */}
-      <button onClick={handleGuestLogin} className="btn-secondary">
-        Jugar como Invitado
+      {/* 🎴 SOLO Botón exclusivo para Juego de Memoria */}
+      <button onClick={handleMemoryGame} className="btn-memory">
+        🎴 Juego de Memoria (Modo Invitado)
       </button>
 
       {error && <p className="error-message">{error}</p>}

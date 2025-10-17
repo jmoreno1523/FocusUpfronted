@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom"; // 👈 Importamos useNavigate
 import { v4 as uuidv4 } from "uuid";  // Importamos la librería para generar un UUID
-import "./ReactionGame.css";
+import "../styles/ReactionGame.css";
 
 function ReactionGame() {
   const [status, setStatus] = useState("waiting"); // waiting | ready | now | done
